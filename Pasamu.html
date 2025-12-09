@@ -1,0 +1,1069 @@
+l
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>PASAMU - Planning & Architecture Repository</title>
+ <style>
+ :root {
+ --cyan: #00BCD4;
+ --green: #4CAF50;
+ --yellow: #FFEB3B;
+ --blue: #2196F3;
+ --dark-blue: #0D47A1;
+ --light-bg: #f5f7fa;
+ }
+ 
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+ 
+ body {
+ background: linear-gradient(135deg, var(--light-bg) 0%, #e3f2fd 100%);
+ min-height: 100vh;
+ }
+ 
+ .app-container {
+ max-width: 1200px;
+ margin: 0 auto;
+ background: white;
+ border-radius: 15px;
+ box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+ overflow: hidden;
+ margin-top: 20px;
+ margin-bottom: 20px;
+ }
+ 
+ .header {
+ background: linear-gradient(90deg, var(--cyan) 0%, var(--green) 50%, var(--yellow) 100%);
+ color: white;
+ padding: 25px;
+ text-align: center;
+ }
+ 
+ .header h1 {
+ font-size: 2.2rem;
+ margin-bottom: 8px;
+ }
+ 
+ .header p {
+ font-size: 1.1rem;
+ opacity: 0.9;
+ }
+ 
+ .nav-tabs {
+ display: flex;
+ background: var(--dark-blue);
+ padding: 0;
+ flex-wrap: wrap;
+ }
+ 
+ .nav-tab {
+ flex: 1;
+ min-width: 120px;
+ padding: 15px;
+ text-align: center;
+ color: white;
+ text-decoration: none;
+ border: none;
+ background: none;
+ cursor: pointer;
+ font-size: 1rem;
+ font-weight: 500;
+ transition: all 0.3s ease;
+ }
+ 
+ .nav-tab:hover {
+ background: rgba(255,255,255,0.1);
+ }
+ 
+ .nav-tab.active {
+ background: var(--blue);
+ box-shadow: inset 0 -3px 0 var(--yellow);
+ }
+ 
+ .tab-content {
+ display: none;
+ padding: 30px;
+ min-height: 600px;
+ }
+ 
+ .tab-content.active {
+ display: block;
+ }
+ 
+ .form-group {
+ margin-bottom: 20px;
+ }
+ 
+ .form-group label {
+ display: block;
+ margin-bottom: 8px;
+ font-weight: 600;
+ color: var(--dark-blue);
+ }
+ 
+ .form-control {
+ width: 100%;
+ padding: 12px 15px;
+ border: 2px solid #e0e0e0;
+ border-radius: 8px;
+ font-size: 1rem;
+ transition: border-color 0.3s ease;
+ }
+ 
+ .form-control:focus {
+ outline: none;
+ border-color: var(--blue);
+ }
+ 
+ .btn {
+ padding: 12px 25px;
+ border: none;
+ border-radius: 8px;
+ font-size: 1rem;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ margin: 5px;
+ }
+ 
+ .btn-primary {
+ background: linear-gradient(135deg, var(--blue) 0%, var(--dark-blue) 100%);
+ color: white;
+ }
+ 
+ .btn-primary:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+ }
+ 
+ .btn-success {
+ background: linear-gradient(135deg, var(--green) 0%, #2E7D32 100%);
+ color: white;
+ }
+ 
+ .resource-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+ gap: 20px;
+ margin: 25px 0;
+ }
+ 
+ .resource-card {
+ background: white;
+ border-radius: 12px;
+ padding: 20px;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+ border-left: 4px solid var(--blue);
+ transition: all 0.3s ease;
+ }
+ 
+ .resource-card:hover {
+ transform: translateY(-5px);
+ box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+ }
+ 
+ .resource-icon {
+ font-size: 2.5rem;
+ margin-bottom: 15px;
+ text-align: center;
+ }
+ 
+ .resource-card h3 {
+ color: var(--dark-blue);
+ margin-bottom: 10px;
+ font-size: 1.2rem;
+ }
+ 
+ .resource-card p {
+ color: #666;
+ margin-bottom: 15px;
+ line-height: 1.5;
+ }
+ 
+ .resource-meta {
+ display: flex;
+ justify-content: space-between;
+ color: #888;
+ font-size: 0.9rem;
+ margin-top: 15px;
+ padding-top: 15px;
+ border-top: 1px solid #eee;
+ }
+ 
+ .upload-area {
+ border: 2px dashed var(--blue);
+ border-radius: 12px;
+ padding: 40px 20px;
+ text-align: center;
+ background: rgba(33, 150, 243, 0.05);
+ cursor: pointer;
+ transition: all 0.3s ease;
+ margin: 20px 0;
+ }
+ 
+ .upload-area:hover {
+ background: rgba(33, 150, 243, 0.1);
+ border-color: var(--green);
+ }
+ 
+ .upload-icon {
+ font-size: 3rem;
+ color: var(--blue);
+ margin-bottom: 15px;
+ }
+ 
+ .stats-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 15px;
+ margin: 25px 0;
+ }
+ 
+ .stat-card {
+ background: white;
+ border-radius: 10px;
+ padding: 20px;
+ text-align: center;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+ border-top: 4px solid var(--cyan);
+ }
+ 
+ .stat-number {
+ font-size: 2.5rem;
+ font-weight: bold;
+ color: var(--dark-blue);
+ margin-bottom: 5px;
+ }
+ 
+ .stat-label {
+ color: #666;
+ font-size: 0.9rem;
+ }
+ 
+ .alert {
+ padding: 15px;
+ border-radius: 8px;
+ margin: 15px 0;
+ border-left: 4px solid;
+ }
+ 
+ .alert-success {
+ background: #d4edda;
+ border-color: var(--green);
+ color: #155724;
+ }
+ 
+ .alert-error {
+ background: #f8d7da;
+ border-color: #dc3545;
+ color: #721c24;
+ }
+ 
+ .user-profile {
+ display: flex;
+ align-items: center;
+ margin-bottom: 25px;
+ padding: 20px;
+ background: linear-gradient(135deg, #f8fdff 0%, #e3f2fd 100%);
+ border-radius: 10px;
+ }
+ 
+ .user-avatar {
+ width: 80px;
+ height: 80px;
+ background: var(--blue);
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ color: white;
+ font-size: 2rem;
+ margin-right: 20px;
+ }
+ 
+ .user-info h2 {
+ color: var(--dark-blue);
+ margin-bottom: 5px;
+ }
+ 
+ .department-badge {
+ background: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 100%);
+ color: white;
+ padding: 5px 12px;
+ border-radius: 20px;
+ font-size: 0.8rem;
+ font-weight: 500;
+ display: inline-block;
+ margin-top: 5px;
+ }
+ 
+ .search-bar {
+ display: flex;
+ margin-bottom: 25px;
+ }
+ 
+ .search-bar input {
+ flex: 1;
+ padding: 12px 15px;
+ border: 2px solid #e0e0e0;
+ border-radius: 8px 0 0 8px;
+ font-size: 1rem;
+ outline: none;
+ }
+ 
+ .search-bar button {
+ background: var(--blue);
+ color: white;
+ border: none;
+ padding: 0 25px;
+ border-radius: 0 8px 8px 0;
+ cursor: pointer;
+ font-weight: 600;
+ }
+ 
+ .footer {
+ background: var(--dark-blue);
+ color: white;
+ text-align: center;
+ padding: 25px;
+ margin-top: 40px;
+ }
+ 
+ @media (max-width: 768px) {
+ .nav-tabs {
+ flex-direction: column;
+ }
+ 
+ .resource-grid {
+ grid-template-columns: 1fr;
+ }
+ 
+ .user-profile {
+ flex-direction: column;
+ text-align: center;
+ }
+ 
+ .user-avatar {
+ margin-right: 0;
+ margin-bottom: 15px;
+ }
+ }
+ </style>
+</head>
+<body>
+ <div class="app-container">
+ <!-- Header -->
+ <div class="header">
+ <h1>￾￾ PASAMU Repository</h1>
+ <p>Planning & Architecture Students of Maseno University</p>
+ </div>
+ <!-- Navigation -->
+ <div class="nav-tabs">
+ <button class="nav-tab active" onclick="openTab('home')">Home</button>
+ <button class="nav-tab" onclick="openTab('browse')">Browse Resources</button>
+ <button class="nav-tab" onclick="openTab('upload')">Upload</button>
+ <button class="nav-tab" onclick="openTab('profile')">My Profile</button>
+ <button class="nav-tab" onclick="openTab('register')">Register</button>
+ <button class="nav-tab" onclick="openTab('login')">Login</button>
+ </div>
+ <!-- Home Tab -->
+ <div id="home" class="tab-content active">
+ <h2>Welcome to PASAMU Repository</h2>
+ <p>Share and access case studies, spatial data, maps, and 3D models with fellow students.</p>
+ 
+ <div class="stats-grid">
+ <div class="stat-card">
+ <div class="stat-number" id="totalResources">0</div>
+ <div class="stat-label">Total Resources</div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-number" id="totalUsers">0</div>
+ <div class="stat-label">Registered Users</div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-number" id="totalDownloads">0</div>
+ <div class="stat-label">Total Downloads</div>
+ </div>
+ </div>
+ <div class="search-bar">
+ <input type="text" id="globalSearch" placeholder="Search case studies, maps, spatial data...">
+ <button onclick="searchResources()">Search</button>
+ </div>
+ <h3>Featured Resources</h3>
+ <div class="resource-grid" id="featuredResources">
+ <!-- Resources will be loaded here -->
+ </div>
+ <h3>Resource Categories</h3>
+ <div class="resource-grid">
+ <div class="resource-card" onclick="openTab('browse')">
+ <div class="resource-icon">￾￾</div>
+ <h3>Case Studies</h3>
+ <p>Detailed analysis and research papers on planning and architecture projects</p>
+ <div class="resource-meta">
+ <span>24 resources</span>
+ </div>
+ </div>
+ <div class="resource-card" onclick="openTab('browse')">
+ <div class="resource-icon">￾￾￾</div>
+ <h3>Spatial Data</h3>
+ <p>GIS data, shapefiles, and geospatial information for analysis</p>
+ <div class="resource-meta">
+ <span>18 resources</span>
+ </div>
+ </div>
+ <div class="resource-card" onclick="openTab('browse')">
+ <div class="resource-icon">￾￾</div>
+ <h3>Maps</h3>
+ <p>Topographical, urban, and thematic maps for planning purposes</p>
+ <div class="resource-meta">
+ <span>32 resources</span>
+ </div>
+ </div>
+ <div class="resource-card" onclick="openTab('browse')">
+ <div class="resource-icon">￾￾￾</div>
+ <h3>3D Models</h3>
+ <p>Architectural and urban design models for visualization</p>
+ <div class="resource-meta">
+ <span>15 resources</span>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- Browse Resources Tab -->
+ <div id="browse" class="tab-content">
+ <h2>Browse Resources</h2>
+ 
+ <div class="search-bar">
+ <input type="text" id="browseSearch" placeholder="Search resources...">
+ <button onclick="searchBrowse()">Search</button>
+ </div>
+ <div style="margin: 20px 0;">
+ <button class="btn" onclick="filterResources('all')">All</button>
+ <button class="btn" onclick="filterResources('case_study')">Case Studies</button>
+ <button class="btn" onclick="filterResources('spatial_data')">Spatial Data</button>
+ <button class="btn" onclick="filterResources('map')">Maps</button>
+ <button class="btn" onclick="filterResources('3d_model')">3D Models</button>
+ </div>
+ <div class="resource-grid" id="browseResources">
+ <!-- Resources will be loaded here -->
+ </div>
+ </div>
+ <!-- Upload Tab -->
+ <div id="upload" class="tab-content">
+ <h2>Upload Resource</h2>
+ <p>Share your case studies, spatial data, maps, or 3D models with the PASAMU community.</p>
+ 
+ <form id="uploadForm" onsubmit="handleUpload(event)">
+ <div class="form-group">
+ <label for="resourceTitle">Resource Title *</label>
+ <input type="text" class="form-control" id="resourceTitle" required>
+ </div>
+ 
+ <div class="form-group">
+ <label for="resourceDescription">Description</label>
+ <textarea class="form-control" id="resourceDescription" rows="3" placeholder="Brief
+description of your resource..."></textarea>
+ </div>
+ 
+ <div class="form-group">
+ <label for="resourceType">Resource Type *</label>
+ <select class="form-control" id="resourceType" required>
+ <option value="">Select Type</option>
+ <option value="case_study">Case Study</option>
+ <option value="spatial_data">Spatial Data</option>
+ <option value="map">Map</option>
+ <option value="3d_model">3D Model</option>
+ </select>
+ </div>
+ 
+ <div class="form-group">
+ <label for="resourceDepartment">Department *</label>
+ <select class="form-control" id="resourceDepartment" required>
+ <option value="">Select Department</option>
+ <option value="gis">Geospatial Information Science</option>
+ <option value="disaster">Disaster Management</option>
+ <option value="urban">Urban Planning</option>
+ </select>
+ </div>
+ 
+ <div class="upload-area" onclick="document.getElementById('resourceFile').click()">
+ <div class="upload-icon">￾￾</div>
+ <h3>Drag & Drop Files Here</h3>
+ <p>or click to browse</p>
+ <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+ Supported: PDF, DOC, SHP, KML, JPG, PNG, OBJ, STL
+ </p>
+ <input type="file" id="resourceFile" style="display: none;" onchange="updateFileName()">
+ <div id="fileName" style="margin-top: 10px; color: var(--blue); font-weight: 500;"></div>
+ </div>
+ 
+ <div class="form-group">
+ <label for="resourceTags">Tags (comma separated)</label>
+ <input type="text" class="form-control" id="resourceTags" placeholder="gis, urban-planning,
+case-study">
+ </div>
+ 
+ <button type="submit" class="btn btn-primary">Upload Resource</button>
+ </form>
+ 
+ <div id="uploadMessage"></div>
+ </div>
+ <!-- Profile Tab -->
+ <div id="profile" class="tab-content">
+ <div class="user-profile">
+ <div class="user-avatar">￾￾</div>
+ <div class="user-info">
+ <h2 id="userName">Guest User</h2>
+ <p id="userEmail">Not logged in</p>
+ <span class="department-badge" id="userDepartment">Please log in</span>
+ </div>
+ </div>
+ 
+ <h3>My Uploaded Resources</h3>
+ <div class="resource-grid" id="userResources">
+ <div class="resource-card">
+ <div class="resource-icon"><U></U>
+ <23EB></23EB></div>
+ <h3>No Resources Uploaded</h3>
+ <p>You haven't uploaded any resources yet. Start by uploading your first resource!</p>
+ </div>
+ </div>
+ 
+ <h3>My Statistics</h3>
+ <div class="stats-grid">
+ <div class="stat-card">
+ <div class="stat-number" id="userUploads">0</div>
+ <div class="stat-label">My Uploads</div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-number" id="userDownloads">0</div>
+ <div class="stat-label">Total Downloads</div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-number" id="userJoined">-</div>
+ <div class="stat-label">Member Since</div>
+ </div>
+ </div>
+ </div>
+ <!-- Register Tab -->
+ <div id="register" class="tab-content">
+ <h2>Create Account</h2>
+ <p>Join the PASAMU Repository community</p>
+ 
+ <form id="registerForm" onsubmit="handleRegister(event)">
+ <div class="form-group">
+ <label for="regFullName">Full Name *</label>
+ <input type="text" class="form-control" id="regFullName" required>
+ </div>
+ 
+ <div class="form-group">
+ <label for="regEmail">Email Address *</label>
+ <input type="email" class="form-control" id="regEmail" required>
+ </div>
+ 
+ <div class="form-group">
+ <label for="regAdmission">Admission Number *</label>
+ <input type="text" class="form-control" id="regAdmission" required>
+ </div>
+ 
+ <div class="form-group">
+ <label for="regDepartment">Department *</label>
+ <select class="form-control" id="regDepartment" required>
+ <option value="">Select Department</option>
+ <option value="gis">Geospatial Information Science</option>
+ <option value="disaster">Disaster Management</option>
+ <option value="urban">Urban Planning</option>
+ </select>
+ </div>
+ 
+ <div class="form-group">
+ <label for="regYear">Year of Study *</label>
+ <select class="form-control" id="regYear" required>
+ <option value="">Select Year</option>
+ <option value="1">Year 1</option>
+ <option value="2">Year 2</option>
+ <option value="3">Year 3</option>
+ <option value="4">Year 4</option>
+ </select>
+ </div>
+ 
+ <div class="form-group">
+ <label for="regPassword">Password *</label>
+ <input type="password" class="form-control" id="regPassword" required>
+ </div>
+ 
+ <div class="form-group">
+ <label for="regConfirmPassword">Confirm Password *</label>
+ <input type="password" class="form-control" id="regConfirmPassword" required>
+ </div>
+ 
+ <button type="submit" class="btn btn-primary">Create Account</button>
+ </form>
+ 
+ <div id="registerMessage"></div>
+ </div>
+ <!-- Login Tab -->
+ <div id="login" class="tab-content">
+ <h2>Login to PASAMU</h2>
+ <p>Access your account to upload and download resources</p>
+ 
+ <form id="loginForm" onsubmit="handleLogin(event)">
+ <div class="form-group">
+ <label for="loginEmail">Email Address</label>
+ <input type="email" class="form-control" id="loginEmail" required>
+ </div>
+ 
+ <div class="form-group">
+ <label for="loginPassword">Password</label>
+ <input type="password" class="form-control" id="loginPassword" required>
+ </div>
+ 
+ <button type="submit" class="btn btn-primary">Login</button>
+ </form>
+ 
+ <div id="loginMessage"></div>
+ 
+ <p style="margin-top: 20px;">
+ Don't have an account? <a href="#" onclick="openTab('register')">Register here</a>
+ </p>
+ </div>
+ <!-- Footer -->
+ <div class="footer">
+ <p>PASAMU Repository &copy; 2025 - Planning and Architecture Students of Maseno
+University</p>
+ <p>Geospatial Information Science | Disaster Management | Urban Planning</p>
+ <p>@Jeraldpro</p>
+ </div>
+ </div>
+ <script>
+ // Sample data storage (in a real app, this would be a database)
+ let users = JSON.parse(localStorage.getItem('pasamuUsers')) || [];
+ let resources = JSON.parse(localStorage.getItem('pasamuResources')) || [];
+ let currentUser = JSON.parse(localStorage.getItem('pasamuCurrentUser')) || null;
+ // Initialize with sample data if empty
+ if (resources.length === 0) {
+ resources = [
+ {
+ id: 1,
+ title: "Maseno Campus Master Plan",
+ description: "String",
+update: "a",
+ type: "map",
+ department: "urban",
+ uploader: "Dr. Omondi",
+ uploadDate: "2026-01-10",
+ downloads: 24,
+ fileSize: "2.5 MB",
+ icon: "￾"
+ },
+ {
+ id: 2,
+ title: "Urban Planning Principles",
+ description: "Add description here",
+ update: "b",
+type: "document",
+ department: "urban",
+ uploader: "Prof. Wanjiku",
+ uploadDate: "2026-01-08",
+ downloads: 18,
+ fileSize: "15.8 MB",
+ icon: "￾"
+ },
+ {
+ id: 3,
+ title: "Kisumu GIS Data",
+ description: "Spatial data layers for Kisumu County including land use and demographics",
+ type: "spatial_data",
+ department: "gis",
+ uploader: "County GIS Dept",
+ uploadDate: "2024-01-05",
+ downloads: 32,
+ fileSize: "45.2 MB",
+ icon: "￾"
+ },
+ {
+ id: 4,
+ title: "Sustainable Architecture Models",
+ description: "3D models showcasing eco-friendly building designs and concepts",
+ type: "3d_model",
+ department: "urban",
+ uploader: "Arch. Kamau",
+ uploadDate: "2026.02.09",
+ downloads: 15,
+ fileSize: "12.3 MB",
+ icon: "￾"
+ }
+ ];
+ localStorage.setItem('pasamuResources', JSON.stringify(resources));
+ }
+ // Tab navigation
+ function openTab(tabName) {
+ // Hide all tab contents
+ const tabContents = document.getElementsByClassName('tab-content');
+ for (let i = 0; i < tabContents.length; i++) {
+ tabContents[i].classList.remove('active');
+ }
+ 
+ // Remove active class from all tabs
+ const tabButtons = document.getElementsByClassName('nav-tab');
+ for (let i = 0; i < tabButtons.length; i++) {
+ tabButtons[i].classList.remove('active');
+ }
+ 
+ // Show the specific tab content
+ document.getElementById(tabName).classList.add('active');
+ 
+ // Add active class to the button that opened the tab
+ event.currentTarget.classList.add('active');
+ 
+ // Load data for specific tabs
+ if (tabName === 'home') {
+ loadHomeData();
+ } else if (tabName === 'browse') {
+ loadBrowseData();
+ } else if (tabName === 'profile') {
+ loadProfileData();
+ }
+ }
+ // Load home page data
+ function loadHomeData() {
+ // Update statistics
+ document.getElementById('totalResources').textContent = resources.length;
+ document.getElementById('totalUsers').textContent = users.length;
+ 
+ let totalDownloads = 0;
+ resources.forEach(resource => {
+ totalDownloads += resource.downloads || 0;
+ });
+ document.getElementById('totalDownloads').textContent = totalDownloads;
+ 
+ // Load featured resources
+ const featuredContainer = document.getElementById('featuredResources');
+ featuredContainer.innerHTML = '';
+ 
+ // Show first 4 resources as featured
+ const featured = resources.slice(0, 4);
+ featured.forEach(resource => {
+ featuredContainer.innerHTML += `
+ <div class="resource-card" onclick="downloadResource(${resource.id})">
+ <div class="resource-icon">${resource.icon}</div>
+ <h3>${resource.title}</h3>
+ <p>${resource.description}</p>
+ <div class="resource-meta">
+ <span>By ${resource.uploader}</span>
+ <span>${resource.downloads} downloads</span>
+ </div>
+ </div>
+ `;
+ });
+ }
+ // Load browse page data
+ function loadBrowseData() {
+ const browseContainer = document.getElementById('browseResources');
+ browseContainer.innerHTML = '';
+ 
+ resources.forEach(resource => {
+ browseContainer.innerHTML += `
+ <div class="resource-card" onclick="downloadResource(${resource.id})">
+ <div class="resource-icon">${resource.icon}</div>
+ <h3>${resource.title}</h3>
+ <p>${resource.description}</p>
+ <div class="resource-meta">
+ <span>By ${resource.uploader}</span>
+ <span>${resource.downloads} downloads</span>
+ </div>
+ </div>
+ `;
+ });
+ }
+ // Load profile data
+ function loadProfileData() {
+ if (currentUser) {
+ document.getElementById('userName').textContent = currentUser.fullName;
+ document.getElementById('userEmail').textContent = currentUser.email;
+ 
+ let departmentName = '';
+ if (currentUser.department === 'gis') departmentName = 'Geospatial Information Science';
+ else if (currentUser.department === 'disaster') departmentName = 'Disaster Management';
+ else if (currentUser.department === 'urban') departmentName = 'Urban Planning';
+ 
+ document.getElementById('userDepartment').textContent = departmentName;
+ 
+ // Load user's resources
+ const userResourcesContainer = document.getElementById('userResources');
+ const userResources = resources.filter(r => r.uploader === currentUser.fullName);
+ 
+ if (userResources.length > 0) {
+ userResourcesContainer.innerHTML = '';
+ userResources.forEach(resource => {
+ userResourcesContainer.innerHTML += `
+ <div class="resource-card" onclick="downloadResource(${resource.id})">
+ <div class="resource-icon">${resource.icon}</div>
+ <h3>${resource.title}</h3>
+ <p>${resource.description}</p>
+ <div class="resource-meta">
+ <span>${resource.downloads} downloads</span>
+ <span>${resource.uploadDate}</span>
+ </div>
+ </div>
+ `;
+ });
+ }
+ 
+ // Update user statistics
+ document.getElementById('userUploads').textContent = userResources.length;
+ 
+ let userDownloads = 0;
+ userResources.forEach(resource => {
+ userDownloads += resource.downloads || 0;
+ });
+ document.getElementById('userDownloads').textContent = userDownloads;
+ 
+ document.getElementById('userJoined').textContent = '2024';
+ } else {
+ document.getElementById('userName').textContent = 'Guest User';
+ document.getElementById('userEmail').textContent = 'Not logged in';
+ document.getElementById('userDepartment').textContent = 'Please log in';
+ }
+ }
+ // Handle user registration
+ function handleRegister(event) {
+ event.preventDefault();
+ 
+ const fullName = document.getElementById('regFullName').value;
+ const email = document.getElementById('regEmail').value;
+ const admission = document.getElementById('regAdmission').value;
+ const department = document.getElementById('regDepartment').value;
+ const year = document.getElementById('regYear').value;
+ const password = document.getElementById('regPassword').value;
+ const confirmPassword = document.getElementById('regConfirmPassword').value;
+ 
+ // Basic validation
+ if (password !== confirmPassword) {
+ showMessage('registerMessage', 'Passwords do not match!', 'error');
+ return;
+ }
+ 
+ // Check if email already exists
+ if (users.find(user => user.email === email)) {
+ showMessage('registerMessage', 'Email already registered!', 'error');
+ return;
+ }
+ 
+ // Create new user
+ const newUser = {
+ id: users.length + 1,
+ fullName: fullName,
+ email: email,
+ admission: admission,
+ department: department,
+ year: year,
+ password: password, // In a real app, this would be hashed
+ joinDate: new Date().toISOString().split('T')[0]
+ };
+ 
+ users.push(newUser);
+ localStorage.setItem('pasamuUsers', JSON.stringify(users));
+ 
+ showMessage('registerMessage', 'Account created successfully! Please log in.', 'success');
+ document.getElementById('registerForm').reset();
+ 
+ // Switch to login tab
+ setTimeout(() => {
+ openTab('login');
+ }, 2000);
+ }
+ // Handle user login
+ function handleLogin(event) {
+ event.preventDefault();
+ 
+ const email = document.getElementById('loginEmail').value;
+ const password = document.getElementById('loginPassword').value;
+ 
+ // Find user
+ const user = users.find(u => u.email === email && u.password === password);
+ 
+ if (user) {
+ currentUser = user;
+ localStorage.setItem('pasamuCurrentUser', JSON.stringify(currentUser));
+ showMessage('loginMessage', 'Login successful!', 'success');
+ document.getElementById('loginForm').reset();
+ 
+ // Update UI
+ loadProfileData();
+ 
+ // Switch to profile tab
+ setTimeout(() => {
+ openTab('profile');
+ }, 1000);
+ } else {
+ showMessage('loginMessage', 'Invalid email or password!', 'error');
+ }
+ }
+ // Handle resource upload
+ function handleUpload(event) {
+ event.preventDefault();
+ 
+ if (!currentUser) {
+ showMessage('uploadMessage', 'Please log in to upload resources.', 'error');
+ return;
+ }
+ 
+ const title = document.getElementById('resourceTitle').value;
+ const description = document.getElementById('resourceDescription').value;
+ const type = document.getElementById('resourceType').value;
+ const department = document.getElementById('resourceDepartment').value;
+ const fileInput = document.getElementById('resourceFile');
+ const tags = document.getElementById('resourceTags').value;
+ 
+ if (!fileInput.files[0]) {
+ showMessage('uploadMessage', 'Please select a file to upload.', 'error');
+ return;
+ }
+ 
+ // Determine icon based on type
+ let icon = '￾'
+ if (type === 'spatial_data') icon = '￾';
+ else if (type === 'map') icon = '￾';
+ else if (type === '3d_model') icon = '￾';
+ 
+ // Create new resource
+ const newResource = {
+ id: resources.length + 1,
+ title: title,
+ description: description,
+ type: type,
+ department: department,
+ uploader: currentUser.fullName,
+ uploadDate: new Date().toISOString().split('T')[0],
+ downloads: 0,
+ fileSize: (fileInput.files[0].size / (1024*1024)).toFixed(1) + ' MB',
+ icon: icon,
+ tags: tags.split(',').map(tag => tag.trim())
+ };
+ 
+ resources.push(newResource);
+ localStorage.setItem('pasamuResources', JSON.stringify(resources));
+ 
+ showMessage('uploadMessage', 'Resource uploaded successfully!', 'success');
+ document.getElementById('uploadForm').reset();
+ document.getElementById('fileName').textContent = '';
+ 
+ // Refresh data
+ loadHomeData();
+ loadBrowseData();
+ loadProfileData();
+ }
+ // Download resource
+ function downloadResource(resourceId) {
+ if (!currentUser) {
+ showMessage('uploadMessage', 'Please log in to download resources.', 'error');
+ openTab('login');
+ return;
+ }
+ 
+ const resource = resources.find(r => r.id === resourceId);
+ if (resource) {
+ resource.downloads = (resource.downloads || 0) + 1;
+ localStorage.setItem('pasamuResources', JSON.stringify(resources));
+ 
+ alert(`Downloading: ${resource.title}\n\nIn a real application, this would start the file
+download.`);
+ 
+ // Refresh data
+ loadHomeData();
+ loadBrowseData();
+ loadProfileData();
+ }
+ }
+ // Filter resources by type
+ function filterResources(type) {
+ const browseContainer = document.getElementById('browseResources');
+ browseContainer.innerHTML = '';
+ 
+ let filteredResources = resources;
+ if (type !== 'all') {
+ filteredResources = resources.filter(r => r.type === type);
+ }
+ 
+ filteredResources.forEach(resource => {
+ browseContainer.innerHTML += `
+ <div class="resource-card" onclick="downloadResource(${resource.id})">
+ <div class="resource-icon">${resource.icon}</div>
+ <h3>${resource.title}</h3>
+ <p>${resource.description}</p>
+ <div class="resource-meta">
+ <span>By ${resource.uploader}</span>
+ <span>${resource.downloads} downloads</span>
+ </div>
+ </div>
+ `;
+ });
+ }
+ // Search resources
+ function searchResources() {
+ const query = document.getElementById('globalSearch').value.toLowerCase();
+ if (!query) return;
+ 
+ const results = resources.filter(resource => 
+ resource.title.toLowerCase().includes(query) || 
+ resource.description.toLowerCase().includes(query)
+ );
+ 
+ const featuredContainer = document.getElementById('featuredResources');
+ featuredContainer.innerHTML = '';
+ 
+ if (results.length > 0) {
+ results.forEach(resource => {
+ featuredContainer.innerHTML += `
+ <div class="resource-card" onclick="downloadResource(${resource.id})">
+ <div class="resource-icon">${resource.icon}</div>
+ <h3>${resource.title}</h3>
+ <p>${resource.description}</p>
+ <div class="resource-meta">
+ <span>By ${resource.uploader}</span>
+ <span>${resource.downloads} downloads</span>
+ </div>
+ </div>
+ `;
+ });
+ } else {
+ featuredContainer.innerHTML = '<p>No resources found matching your search.</p>';
+ }
+ }
+ // Update file name display
+ function updateFileName() {
+ const fileInput = document.getElementById('resourceFile');
+ const fileNameDisplay = document.getElementById('fileName');
+ 
+ if (fileInput.files[0]) {
+ fileNameDisplay.textContent = 'Selected: ' + fileInput.files[0].name;
+ } else {
+ fileNameDisplay.textContent = '';
+ }
+ }
+ // Show message
+ function showMessage(elementId, message, type) {
+ const element = document.getElementById(elementId);
+ element.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+ 
+ setTimeout(() => {
+ element.innerHTML = '';
+ }, 5000);
+ }
+ // Initialize the app
+ document.addEventListener('DOMContentLoaded', function() {
+ loadHomeData();
+ if (currentUser) {
+ loadProfileData();
+ }
+ });
+ </script>
+</body>
+</html>
